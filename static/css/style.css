@@ -38,121 +38,379 @@ body {
     font-weight: 800;
 }
 
-
-/* Display */
+/* =========================================================
+   DESKTOP / EKSPEDITIONSVISNING
+   ========================================================= */
 
 .display-page {
+    margin: 0;
+    padding: 10px;
     min-height: 100vh;
+    background: #ffffff;
     overflow: hidden;
+    border: 5px solid #222222;
 }
 
+
+/* Logo-headeren bruges ikke på ekspeditionsskærmen */
+
 .display-header {
-    height: 70px;
-    display: flex;
-    align-items: center;
-    padding: 0 28px;
-    background: #ffffff;
-    border-bottom: 1px solid #e5e7eb;
+    display: none;
 }
+
+
+/* To lige store sider */
 
 .display-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    min-height: calc(100vh - 70px);
+    gap: 10px;
+
+    height: calc(100vh - 20px);
+    min-height: 600px;
 }
+
+
+/* Begge ekspeditionsfelter */
 
 .display-side {
-    padding: 42px;
+    position: relative;
+
     display: flex;
     flex-direction: column;
+
+    padding: 0;
+
+    border-radius: 8px;
+
+    overflow: hidden;
 }
+
+
+/* VENSTRE */
 
 .display-side--left {
-    background: #dbeafe;
+    background: rgb(216, 244, 255);
 }
+
+
+/* HØJRE */
 
 .display-side--right {
-    background: #fce7f3;
+    background: rgb(255, 211, 214);
 }
 
-.display-side h1 {
-    margin: 0 0 25px;
-    font-size: 38px;
-    letter-spacing: 2px;
+
+/* Farvet topbjælke */
+
+.display-side::before {
+    content: "";
+
+    display: block;
+
+    width: 100%;
+    height: 30px;
+
+    flex-shrink: 0;
 }
+
+
+.display-side--left::before {
+    background: rgb(183, 221, 237);
+}
+
+
+.display-side--right::before {
+    background: rgb(235, 175, 181);
+}
+
+
+/* Lille statuscirkel øverst */
+
+.display-side::after {
+    content: "";
+
+    position: absolute;
+
+    top: 8px;
+    left: 10px;
+
+    width: 14px;
+    height: 14px;
+
+    border-radius: 50%;
+}
+
+
+.display-side--left::after {
+    background: #3b8bad;
+}
+
+
+.display-side--right::after {
+    background: #a80025;
+}
+
+
+/* Vi viser ikke VENSTRE/HØJRE-overskriften */
+
+.display-side > h1 {
+    display: none;
+}
+
+
+/* =========================================================
+   TELEFONSTATUS
+   ========================================================= */
 
 .status-badge {
-    align-self: flex-start;
-    margin-bottom: 20px;
-    padding: 8px 13px;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.7);
-    font-weight: 700;
+    position: absolute;
+
+    top: 5px;
+    right: 7px;
+
+    z-index: 5;
+
+    margin: 0;
+
+    padding: 4px 9px;
+
+    border-radius: 4px;
+
+    background: #ffffff;
+
+    font-size: 11px;
+    font-weight: 400;
+
+    line-height: 1;
 }
+
+
+/* Grøn prik foran status */
+
+.status-badge::before {
+    content: "";
+
+    display: inline-block;
+
+    width: 5px;
+    height: 5px;
+
+    margin-right: 5px;
+
+    border-radius: 50%;
+
+    background: #63dd86;
+
+    vertical-align: middle;
+}
+
+
+/* =========================================================
+   STARTSALDO
+   ========================================================= */
 
 .balance-info {
-    margin-bottom: 26px;
-    font-size: 18px;
+    display: none;
 }
 
+
+/* =========================================================
+   GEVINSTLISTE
+   ========================================================= */
+
 .prize-list {
+    display: flex;
+    flex-direction: column;
+
     flex: 1;
+
+    width: 100%;
+
+    margin: 0;
 }
+
+
+/* Header: Gevinsternavn / Pris */
 
 .prize-row {
     display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 20px;
-    padding: 15px 0;
-    border-bottom: 1px solid rgba(17, 24, 39, 0.15);
-    font-size: 18px;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        90px;
+
+    align-items: center;
+
+    min-height: 30px;
+
+    padding: 0 10px;
+
+    border: 0;
+
+    font-size: 14px;
 }
+
+
+/* Header-række */
 
 .prize-row--header {
+    min-height: 30px;
+
+    font-size: 12px;
     font-weight: 700;
+
+    background: rgba(255, 255, 255, 0.18);
 }
 
-.empty-message {
-    padding: 25px 0;
-    color: #6b7280;
+
+/* Pris til højre */
+
+.prize-row span:last-child {
+    text-align: right;
 }
+
+
+/* Skiftevis række-farve */
+
+.display-side--left
+.prize-row:not(.prize-row--header):nth-child(even) {
+    background: rgb(208, 238, 251);
+}
+
+
+.display-side--left
+.prize-row:not(.prize-row--header):nth-child(odd) {
+    background: rgb(216, 244, 255);
+}
+
+
+.display-side--right
+.prize-row:not(.prize-row--header):nth-child(even) {
+    background: rgb(250, 202, 205);
+}
+
+
+.display-side--right
+.prize-row:not(.prize-row--header):nth-child(odd) {
+    background: rgb(255, 211, 214);
+}
+
+
+/* Hvis listen er tom */
+
+.empty-message {
+    padding: 15px 10px;
+
+    color: rgba(17, 24, 39, 0.55);
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   TOTAL-FELT
+   ========================================================= */
 
 .display-total {
     display: flex;
-    align-items: flex-end;
+
+    align-items: center;
     justify-content: space-between;
-    padding-top: 28px;
-    border-top: 2px solid #111827;
+
+    width: 100%;
+    height: 46px;
+
+    margin-top: auto;
+
+    padding: 0 12px;
+
+    border: 0;
+
+    color: #ffffff;
 }
 
+
+/* Venstre total */
+
+.display-side--left .display-total {
+    background: rgb(130, 173, 192);
+}
+
+
+/* Højre total */
+
+.display-side--right .display-total {
+    background: rgb(168, 91, 99);
+}
+
+
 .display-total span {
-    font-size: 25px;
+    font-size: 14px;
     font-weight: 700;
 }
 
+
 .display-total strong {
-    font-size: 52px;
+    font-size: 36px;
+    font-weight: 700;
+
+    line-height: 1;
 }
+
+
+/* =========================================================
+   VENTER PÅ EKSPEDITION
+   ========================================================= */
 
 .waiting {
     flex: 1;
+
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+
     align-items: center;
-    gap: 10px;
+    justify-content: center;
+
+    flex-direction: column;
+
+    gap: 5px;
+
     text-align: center;
-    opacity: 0.65;
+
+    opacity: 0.5;
 }
+
 
 .waiting strong {
-    font-size: 32px;
+    font-size: 22px;
 }
+
 
 .waiting span {
-    font-size: 18px;
+    font-size: 13px;
 }
 
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    .display-page {
+        overflow: auto;
+    }
+
+    .display-grid {
+        grid-template-columns: 1fr;
+
+        height: auto;
+    }
+
+    .display-side {
+        min-height: 600px;
+    }
+}
 
 /* Mobile */
 
