@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Scan billetter - PrizePoint</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+</head>
+
+<body class="mobile-page">
+
+<main class="mobile-container">
+
+    <div class="mobile-logo">
+        <span class="logo-icon">P</span>
+        <span>PrizePoint</span>
+    </div>
+
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% for category, message in messages %}
+
+            <div class="message message--{{ category }}">
+                {{ message }}
+            </div>
+
+        {% endfor %}
+
+    {% endwith %}
+
+
+    <section class="mobile-card">
+
+        <h1>
+            Scan billetter
+        </h1>
+
+        <p class="muted">
+            Hold billetstregkoden foran kameraet.
+        </p>
+
+
+        <div id="reader"></div>
+
+
+        <form
+            id="scan-form"
+            method="post"
+            action="{{ url_for('register_ticket') }}"
+        >
+
+            <input
+                id="barcode-input"
+                name="barcode"
+                type="hidden"
+            >
+
+        </form>
+
+
+        <details class="manual-test">
+
+            <summary>
+                Manuel test
+            </summary>
+
+            <p>
+                Brug kun dette til lokal udvikling,
+                hvis du ikke har en teststregkode.
+            </p>
+
+            <form
+                method="post"
+                action="{{ url_for('register_ticket') }}"
+            >
+
+                <label for="manual-balance">
+                    Billetsaldo
+                </label>
+
+                <input
+                    id="manual-balance"
+                    name="barcode"
+                    type="number"
+                    min="1"
+                    inputmode="numeric"
+                    placeholder="Fx 550"
+                    required
+                >
+
+                <button
+                    class="button button--primary"
+                    type="submit"
+                >
+                    Registrer
+                </button>
+
+            </form>
+
+        </details>
+
+
+        <a
+            class="button button--secondary"
+            href="{{ url_for('mobile') }}"
+        >
+            Tilbage
+        </a>
+
+    </section>
+
+</main>
+
+
+<script
+    src="{{ url_for('static', filename='vendor/html5-qrcode.min.js') }}"
+></script>
+
+<script
+    src="{{ url_for('static', filename='js/scanner.js') }}"
+></script>
+
+</body>
+</html>

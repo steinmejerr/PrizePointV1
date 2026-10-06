@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>PrizePoint</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+</head>
+
+<body class="display-page">
+
+<header class="display-header">
+    <div class="logo">
+        <span class="logo-icon">P</span>
+        <span>PrizePoint</span>
+    </div>
+</header>
+
+<main class="display-grid">
+
+    <section class="display-side display-side--left">
+
+        <h1>VENSTRE</h1>
+
+        <div id="left-content"></div>
+
+    </section>
+
+
+    <section class="display-side display-side--right">
+
+        <h1>HØJRE</h1>
+
+        <div id="right-content"></div>
+
+    </section>
+
+</main>
+
+<script
+    src="{{ url_for('static', filename='js/display.js') }}"
+></script>
+
+</body>
+</html>

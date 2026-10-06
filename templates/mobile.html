@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>PrizePoint</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+</head>
+
+<body class="mobile-page">
+
+<main class="mobile-container">
+
+    <div class="mobile-logo">
+        <span class="logo-icon">P</span>
+        <span>PrizePoint</span>
+    </div>
+
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% for category, message in messages %}
+
+            <div class="message message--{{ category }}">
+                {{ message }}
+            </div>
+
+        {% endfor %}
+
+    {% endwith %}
+
+
+    {% if state.active %}
+
+        <section class="mobile-card">
+
+            <span class="mobile-label">
+                Aktiv ekspedition
+            </span>
+
+            <h1>
+                {% if state.side == "left" %}
+                    VENSTRE
+                {% else %}
+                    HØJRE
+                {% endif %}
+            </h1>
+
+
+            <div class="mobile-balance">
+
+                <span>
+                    Resterende billetsaldo
+                </span>
+
+                <strong>
+                    {{ state.remaining_balance }}
+                </strong>
+
+            </div>
+
+
+            <a
+                class="button button--primary"
+                href="{{ url_for('scan_tickets') }}"
+            >
+                Scan billetter
+            </a>
+
+
+            <div class="mobile-section">
+
+                <h2>
+                    Valgte gevinster
+                </h2>
+
+                {% if state.prizes %}
+
+                    {% for prize in state.prizes %}
+
+                        <div class="mobile-prize">
+
+                            <span>
+                                {{ prize.name }}
+                            </span>
+
+                            <strong>
+                                -{{ prize.price }}
+                            </strong>
+
+                        </div>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <p class="muted">
+                        Scan et NFC-tag ved en gevinst.
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+
+            <form
+                method="post"
+                action="{{ url_for('finish') }}"
+            >
+
+                <button
+                    class="button button--danger"
+                    type="submit"
+                >
+                    Afslut ordre
+                </button>
+
+            </form>
+
+        </section>
+
+
+    {% else %}
+
+        <section class="mobile-card mobile-card--waiting">
+
+            <h1>
+                Klar til ny ekspedition
+            </h1>
+
+            <p>
+                Scan NFC-tagget på VENSTRE eller HØJRE side.
+            </p>
+
+        </section>
+
+    {% endif %}
+
+</main>
+
+</body>
+</html>

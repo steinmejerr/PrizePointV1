@@ -1,0 +1,53 @@
+services:
+  web:
+    build: .
+    container_name: prizepoint-web
+    restart: unless-stopped
+
+    env_file:
+      - .env
+
+    ports:
+      - "127.0.0.1:8000:8000"
+
+    volumes:
+      - .:/app
+
+    command:
+      [
+        "gunicorn",
+        "--workers",
+        "1",
+        "--reload",
+        "--bind",
+        "0.0.0.0:8000",
+        "--access-logfile",
+        "-",
+        "--error-logfile",
+        "-",
+        "wsgi:app"
+      ]
+
+  caddy:
+    image: caddy:2-alpine
+    container_name: prizepoint-caddy
+    restart: unless-stopped
+
+    depends_on:
+      - web
+
+    env_file:
+      - .env
+
+    ports:
+      - "80:80"
+      - "443:443"
+
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  caddy_data:
+  caddy_config:
